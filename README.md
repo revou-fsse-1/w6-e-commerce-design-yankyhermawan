@@ -26,7 +26,7 @@ class createOrder():
         this.customerDatabase = query customer table
         this.orderIDDatabase = query orderID table
         this.paymentDatabase = query payment table
-        this.generateOrderID
+        this.generateOrderID()
         
     getTotalPrice():
         let totalPrice = 0
