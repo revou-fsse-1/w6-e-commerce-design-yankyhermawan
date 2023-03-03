@@ -14,74 +14,56 @@ Menggunakan *Sequence Diagram* dikarenakan untuk merepresentasikan urutan pesan 
 
 Pseudocode:
 (asumsi database sudah terurutkan berdasarkan id)
-```
-input: [{productID, quantity}] (object)
-output: totalPrice
+```javascript
+//input: customerID (string), [{productID, quantity}] (object)
+//output: none
 
-function getTotalPrice(products):
-    let totalPrice = 0
-    for each product in products:
-        totalPrice = totalPrice + product.price
-        product.stock -= 1
+class createOrder():
+    constructor(customerID, products):
+        this.customerID= customerID
+        this.products= products
+        this.productDatabase = query product table
+        this.customerDatabase = query customer table
+        this.orderIDDatabase = query orderID table
+        this.paymentDatabase = query payment table
+        this.generateOrderID
+        
+    getTotalPrice():
+        let totalPrice = 0
+        
+        for each product in this.products.productID:
+            totalPrice = totalPrice + this.productDatabase[productID].price
+            this.productDatabase[productID].stock -= 1
 
-    return totalPrice
-```
-```
-input: customerID (string), [{productID, quantity}] (object)
-output: orderID (integer)
+        return totalPrice
 
-function generateOrderID(customerID, products):
-    customerDatabase = query customer database's table
-    orderIDDatabase = query order ID database's table
-    if customerID in customerDatabase:
-        orderID = max(database.id) + 1
-        if checkStock(products) == true:
-            if processPayment(getTotalPrice(products)) == true:
-                callSeller(orderID)
-                removeStock(products)
+    generateOrderID():
+        if this.customerID in this.customerDatabase:
+            orderID = max(orderIDDatabase.id) + 1
+            if this.checkStock(this.products) == true && this.processPayment(this.getTotalPrice(products)) == true:
+                this.callSeller(orderID)
+                this.removeStock(this.products)
                 return orderID 
-    else:
-        throw errorMassage
-```
-```
-input: [{productID, quantity}] (object)
-output: boolean
+        else:
+            throw errorMassage
 
-function checkStock(products):
-    productDatabase= query product database's table
-    
-    for each productID, quantity in products.productID products.quantity:
-        if productID valid in productDatabase:
-            if quantity < quantity in productDatabaase:
+    checkStock():
+        for each productID, quantity in this.products.productID, this.products.quantity:
+            if productID valid in this.productDatabase && quantity < this.productDatabase.quantity:
                 return true
-```
-```
-input: orderID (integer)
-output: none
 
-    function notifySeller(orderID):
-        send orderID to seller's email
-```
-```
-input: [{productID, quantity}] (object)
-output: none
+    notifySeller():
+       // send this.generateOrderID to seller's email
 
-function removeStock(products):
-    productDatabase = query product database's table
-    for each productID, quantity in products.productsID, products.quantity:
-        productDatabase[productID] -= quantity
-```
-```
-input: totalPrice (integer)
-output: boolean
+    removeStock():
+        for each productID, quantity in this.products.productsID, this.products.quantity:
+            productDatabase[productID] -= quantity
 
-function processPayment(totalPrice):
-    paymentDatabase = query payment database's table
-
-    if totalPrice is valid in paymentDatabase:
-        return true
-    else:
-        return false
+    processPayment():
+        if this.getTotalPrice is valid in this.paymentDatabase:
+            return true
+        else:
+            return false
 ```
 
 |Function's name|Complexity|Analysis|
